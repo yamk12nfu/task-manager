@@ -7,5 +7,5 @@ import (
 func main() {
 	router := infrastructure.NewRouter()
 
-  router.Start()
+	router.Start()
 }
