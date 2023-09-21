@@ -1,0 +1,34 @@
+linters:
+  enable-all: true
+  fast: false
+  disable:
+    #deprecated linters
+    - maligned
+    - interfacer
+    - scopelint
+    - golint
+    # customs
+    - gofumpt
+    - stylecheck
+    - paralleltest
+    - godot
+linters-settings:
+  varnamelen:
+    max-distance: 10
+    ignore-decls:
+      - c Context
+      - e error
+  revive:
+    rules:
+      - name: var-naming
+        arguments:
+          exceptions:
+            # black list
+            - ["SQL", "ID"]
+            # white list
+            - []
+  tagliatelle:
+    case:
+      rules:
+        json: snake
+        yaml: goCamel

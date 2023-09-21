@@ -16,7 +16,7 @@ func NewRouter() *Router {
 	return &Router{echo: e}
 }
 
-type Router struct{
+type Router struct {
 	echo *echo.Echo
 }
 
