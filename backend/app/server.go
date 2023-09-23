@@ -1,7 +1,7 @@
 package main
 
 import (
-	"task-manager/infrastructure"
+	"task-manager/app/infrastructure"
 )
 
 func main() {
