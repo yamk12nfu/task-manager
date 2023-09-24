@@ -11,8 +11,8 @@ services:
       MYSQL_USER: admin
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: taskmanager-admin
+      MYSQL_DATABASE: task-manager-admin
     volumes:
-      - ./mysql:/var/lib/mysql
+      - mysql:/var/lib/mysql
 volumes:
   mysql:
