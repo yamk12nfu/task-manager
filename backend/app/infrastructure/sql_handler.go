@@ -12,12 +12,13 @@ import (
 	"task-manager/app/config"
 	"task-manager/app/interface/database"
 	"task-manager/app/usecases"
+	"task-manager/app/utils"
 )
 
 var (
 	driverName     = "mysql"
 	dataSourceName = fmt.Sprintf(
-		"%s:%s@tcp(%s:%d)/taskmanger-admin?parseTime=true",
+		"%s:%s@tcp(%s:%d)/task-manager-admin?parseTime=true",
 		config.Conf.DB.User, config.Conf.DB.Password, config.Conf.DB.Host, config.Conf.DB.Port,
 	)
 )
@@ -139,6 +140,8 @@ func (t *transaction) Do(ctx context.Context, fn func(context.Context) error) (e
 			err = tx.Rollback()
 		}
 	}()
+
+	err = utils.PanicToError(func() error { return fn(context.WithValue(ctx, txKey{}, tx)) })
 
 	return
 }
