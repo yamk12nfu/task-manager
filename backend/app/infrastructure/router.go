@@ -25,6 +25,7 @@ func NewRouter() *Router {
 	taskController := controllers.NewTaskController(sqlHandler)
 	tasks := v1.Group("/tasks")
 	tasks.POST("", newHandlerFunc(taskController.Create))
+	tasks.GET("/:id", newHandlerFunc(taskController.Show))
 
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")

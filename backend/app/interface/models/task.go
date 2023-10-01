@@ -12,6 +12,8 @@ type TaskModel struct {
 	Description string    `db:"description"`
 	DueDate     time.Time `db:"due_date"`
 	Status      bool      `db:"status"`
+	CreatedAt   time.Time `db:"created_at"`
+	UpdatedAt   time.Time `db:"updated_at"`
 }
 
 func (tm *TaskModel) ToEntities() (*entities.Task, error) {

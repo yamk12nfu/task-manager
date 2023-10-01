@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"errors"
 
 	"task-manager/app/domain/entities"
 	"task-manager/app/interface/models"
@@ -22,4 +23,32 @@ func (r *TaskRepository) Save(ctx context.Context, task *entities.Task) (int64, 
 	}
 
 	return res.LastInsertId()
+}
+
+func (r *TaskRepository) FindByID(ctx context.Context, id string) (*entities.Task, error) {
+	query := "select * from tasks where id = :id"
+
+	row, err := r.NamedQuery(ctx, query, map[string]any{"id": id})
+	if err != nil {
+		return &entities.Task{}, err
+	}
+
+	defer row.Close()
+
+	tm := models.TaskModel{}
+	if row.Next() {
+		err = row.StructScan(&tm)
+	} else {
+		err = errors.New("task not found id: " + id)
+	}
+	if err != nil {
+		return &entities.Task{}, err
+	}
+
+	task, err := tm.ToEntities()
+	if err != nil {
+		return &entities.Task{}, err
+	}
+
+	return task, err
 }

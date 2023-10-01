@@ -47,3 +47,16 @@ func (controller *TaskController) Create(c Context) error {
 
 	return c.JSON(http.StatusCreated, http.StatusText(http.StatusCreated))
 }
+
+func (controller *TaskController) Show(c Context) error {
+	id := c.Param("id")
+
+	ctx := c.Request().Context()
+
+	task, err := controller.Interactor.FindByID(ctx, id)
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusOK, schemas.NewTaskSchemaFromEntities(task))
+}

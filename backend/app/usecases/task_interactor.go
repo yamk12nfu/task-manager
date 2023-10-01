@@ -9,6 +9,7 @@ import (
 
 type TaskRepository interface {
 	Save(context.Context, *entities.Task) (int64, error)
+	FindByID(context.Context, string) (*entities.Task, error)
 }
 
 type TaskInteractor struct {
@@ -34,4 +35,8 @@ func (i *TaskInteractor) Save(ctx context.Context, name, description string, due
 		return
 	})
 
+}
+
+func (i *TaskInteractor) FindByID(ctx context.Context, id string) (*entities.Task, error) {
+	return i.TaskRepository.FindByID(ctx, id)
 }
